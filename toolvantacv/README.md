@@ -1,46 +1,50 @@
-# ToolvantaCV
+# ToolvantaCV - GitHub Pages Ready
 
-ToolvantaCV, `toolvantacv.space` domaininde çalışacak profesyonel CV/Resume SaaS platformudur. Next.js, React ve Tailwind CSS ile hazırlanmıştır.
+Bu klasör, ToolvantaCV sitesinin GitHub Pages uyumlu temiz kopyasıdır. Mevcut `toolvantacv` projesi korunmuştur; GitHub'a yüklemek için bu klasörü kullanabilirsiniz.
+
+## Önemli
+
+GitHub'a yüklerken `toolvantacv-github-pages` klasörünün içindeki dosyalar repo kökünde olmalıdır.
+
+Doğru yapı:
+
+```txt
+repo-root/
+  .github/
+  app/
+  components/
+  data/
+  lib/
+  public/
+  package.json
+  next.config.mjs
+```
+
+Yanlış yapı:
+
+```txt
+repo-root/
+  toolvantacv-github-pages/
+    app/
+    package.json
+```
+
+Yanlış yapı kullanılırsa GitHub Actions projeyi kökte bulamaz ve site 404 verebilir.
 
 ## Özellikler
 
-- Ana sayfa, şablonlar sayfası, şablon detay sayfası ve iletişim sayfası
-- Modern, Minimal, Creative, Professional ve Student kategorilerinde 50 örnek CV şablonu
-- Tüm şablon detaylarında kullanım alanı, avantajlar ve uzun özgün açıklama içerikleri
-- Hakkımızda, Gizlilik Politikası, Çerez Politikası, Kullanım Şartları, KVKK/GDPR ve Yasal Uyarı sayfaları
-- 30 yazılık SEO odaklı CV, kariyer, resume örneği ve mülakat rehberi merkezi
-- Canlı önizlemeli CV Builder
+- Next.js, React ve Tailwind CSS
+- GitHub Pages için statik export
+- 50 CV şablonu
+- CV Builder
 - ATS Score Analyzer
 - Resume Strength Checker
 - Cover Letter Generator
-- PDF indirme ve yazdırma akışı
-- Google Analytics altyapısı için `NEXT_PUBLIC_GA_ID` ortam değişkeni
-- Gerçek AdSense kodu içermeyen reklam placeholder bileşenleri
-- `public/ads.txt` dosyası
-- Local TypeScript array ile tutulan şablon verisi
-- SEO uyumlu metadata, sitemap ve robots çıktısı
-- Frontend-only iletişim formu
-- Vercel deploy yapısına uygun Next.js proje düzeni
-
-## CV Builder
-
-CV Builder şu özellikleri içerir:
-
-- Kişisel bilgiler, deneyim, eğitim, yetenekler, sertifikalar, projeler ve diller
-- Sağ tarafta canlı CV önizleme
-- Seçili şablonla PDF indirme
-- Tarayıcı yazdırma desteği
-- Reset ve Use This Template butonları
-- ATS Score Analyzer ile 0-100 arası otomatik skor
-- Resume Strength Checker ile Contact Information, Professional Summary, Work Experience, Education, Skills, Projects, Certifications, Languages, Formatting ve Keyword Optimization kontrolleri
-
-## Cover Letter Generator
-
-`/cover-letter-generator` sayfası tamamen frontend çalışır. AI API veya backend kullanmaz.
-
-- Full name, job title, company name, industry, experience level, key skills, motivation ve tone alanları
-- Professional, Friendly, Confident ve Formal ton seçenekleri
-- Generate, Copy, Download as TXT ve Print butonları
+- Blog ve rehber sayfaları
+- Yasal sayfalar
+- SEO metadata, sitemap ve robots çıktısı
+- AdSense placeholder alanları
+- Google Analytics ortam değişkeni desteği
 
 ## Kurulum
 
@@ -54,132 +58,79 @@ npm install
 npm run dev
 ```
 
-Yerel geliştirme sunucusu varsayılan olarak `http://localhost:3000` adresinde açılır.
+Yerel geliştirme adresi:
+
+```txt
+http://localhost:3000
+```
 
 ## Build
 
 ```bash
 npm run build
-npm run preview
 ```
 
-GitHub Pages için statik çıktı `npm run build` veya `npm run build:github` sonrası `out/` klasörüne üretilir.
-
-## Deploy
-
-Vercel ile deploy için:
-
-1. Projeyi GitHub, GitLab veya Bitbucket reposuna gönderin.
-2. Vercel üzerinde yeni proje olarak içe aktarın.
-3. Zip veya repo içinde hem `toolvanta/` hem `toolvantacv/` klasörü varsa Root Directory alanını kesinlikle `toolvantacv` olarak ayarlayın.
-4. Framework preset olarak Next.js seçili kalabilir.
-5. Build command: `npm run build`
-6. Output ayarı boş bırakılabilir.
-7. Domain ayarlarında `toolvantacv.space` domainini projeye bağlayın.
-
-Ödeme sistemi bu sürümde yoktur. Google Analytics kullanmak istiyorsanız `NEXT_PUBLIC_GA_ID` ortam değişkenini ekleyin.
-Google AdSense onayından sonra gerçek yayıncı kimliği `public/ads.txt` dosyasına eklenmelidir.
+Statik çıktı `out/` klasörüne üretilir.
 
 ## GitHub Pages Deploy
 
-Bu proje GitHub Pages için statik export uyumludur.
+1. GitHub'da yeni bir repository oluşturun.
+2. Bu klasörün içindeki dosyaları repository köküne yükleyin.
+3. Repository `Settings -> Pages` bölümüne girin.
+4. `Source` alanını `GitHub Actions` yapın.
+5. Değişiklikleri `main` veya `master` branch'e push edin.
+6. Actions tamamlandıktan sonra GitHub Pages URL'sini açın.
 
-Yapılan ayarlar:
-
-- `next.config.mjs` içinde `output: "export"`
-- `trailingSlash: true`
-- `images.unoptimized: true`
-- `public/.nojekyll`
-- GitHub Actions workflow dosyası
-- Repository URL yayını için otomatik `GITHUB_PAGES_BASE_PATH`
-- `NEXT_PUBLIC_SITE_URL` ile sitemap, canonical ve Open Graph URL kontrolü
-
-Varsayılan hedef, özel domain olmadan GitHub repository URL altında çalışmaktır:
+Workflow dosyası:
 
 ```txt
-https://kullanici-adi.github.io/repository-name/
+.github/workflows/deploy-github-pages.yml
 ```
 
-Eğer GitHub reposunun kökü doğrudan `toolvantacv` ise şu workflow kullanılır:
+Workflow, normal repository Pages yayını için şu değerleri otomatik ayarlar:
 
 ```txt
-toolvantacv/.github/workflows/deploy-github-pages.yml
+GITHUB_PAGES_BASE_PATH=/repository-name
+NEXT_PUBLIC_SITE_URL=https://username.github.io/repository-name
 ```
 
-Eğer GitHub reposunda iki klasör varsa:
+Bu ayarlar Next.js asset ve link yollarının repo alt yoluyla üretilmesini sağlar. GitHub Pages'te en sık görülen 404 sorunu bu şekilde engellenir.
 
-```txt
-toolvanta/
-toolvantacv/
-```
+## Özel Domain
 
-repo kökündeki şu workflow kullanılır:
+Özel domain kullanmayacaksanız `public/CNAME` dosyası oluşturmayın.
 
-```txt
-.github/workflows/toolvantacv-github-pages.yml
-```
-
-GitHub ayarları:
-
-1. Repository Settings bölümüne girin.
-2. Pages bölümünde Source olarak `GitHub Actions` seçin.
-3. Değişiklikleri `main` veya `master` branch'e push edin.
-4. Actions tamamlandıktan sonra Pages URL'sini açın.
-
-Build çıktısı GitHub Actions tarafından `out/` klasöründen Pages'e yüklenir.
-
-Workflow normal repository Pages yayını için şu değerleri otomatik oluşturur:
-
-```yaml
-GITHUB_PAGES_BASE_PATH: /repository-name
-NEXT_PUBLIC_SITE_URL: https://username.github.io/repository-name
-```
-
-Bu ayar özellikle 404 hatasını önler; Next.js linkleri ve static asset yolları repository alt yolu ile üretilir.
-
-Özel domain kullanmak isterseniz:
+`toolvantacv.space` gibi özel domain kullanmak için:
 
 1. `public/CNAME.example` dosyasını `public/CNAME` olarak kopyalayın.
-2. İçeriği `toolvantacv.space` olarak bırakın veya kendi domaininizle değiştirin.
-3. GitHub repository Settings -> Secrets and variables -> Actions -> Variables bölümüne `GITHUB_PAGES_CUSTOM_DOMAIN` ekleyin.
-4. Değer olarak `toolvantacv.space` yazın.
-5. Pages bölümünde custom domaini tanımlayın ve DNS kayıtlarını GitHub Pages'e yönlendirin.
+2. İçeriği kendi domaininizle güncelleyin.
+3. GitHub repository `Settings -> Secrets and variables -> Actions -> Variables` bölümüne `GITHUB_PAGES_CUSTOM_DOMAIN` ekleyin.
+4. Değer olarak domaininizi yazın. Örnek: `toolvantacv.space`
+5. GitHub Pages custom domain ayarını ve DNS kayıtlarını tamamlayın.
 
-Özel domain aktif olduğunda workflow `basePath` kullanmaz ve site kök domainde çalışır.
+Özel domain aktif olduğunda workflow `basePath` kullanmaz ve site kök domain üzerinden çalışır.
 
-## Google Analytics
+## Ortam Değişkenleri
 
-Google Analytics 4 ölçüm kimliğini Vercel veya GitHub Actions ortam değişkenlerine ekleyin:
-
-```txt
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-```
-
-Bu değer boş bırakılırsa Analytics scriptleri yüklenmez.
-
-## Google Search Console
-
-1. Google Search Console üzerinde `Domain` property seçin.
-2. `toolvantacv.space` domainini ekleyin.
-3. DNS TXT doğrulama kaydını domain sağlayıcınızda oluşturun.
-4. Doğrulama tamamlandıktan sonra Sitemap bölümüne şu adresi gönderin:
+`.env.example`:
 
 ```txt
-https://toolvantacv.space/sitemap.xml
+NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_SITE_URL=https://toolvantacv.space
 ```
 
-5. `robots.txt` kontrolü için şu adresi test edin:
+GitHub Pages workflow, repository URL'si için `NEXT_PUBLIC_SITE_URL` değerini otomatik üretir.
 
-```txt
-https://toolvantacv.space/robots.txt
-```
+## 404 Kontrol Listesi
 
-## AdSense Kurulumu
+Site GitHub Pages'te 404 verirse şunları kontrol edin:
 
-1. AdSense hesabında `toolvantacv.space` sitesini ekleyin.
-2. Site onayı için Google'ın verdiği yönergeleri izleyin.
-3. Onay sonrası gerçek publisher satırını `public/ads.txt` içine ekleyin.
-4. Reklam kodlarını eklemeden önce placeholder konumlarını kontrol edin.
-5. Reklamları navigasyon, form butonları, PDF indir veya CTA butonlarına çok yakın yerleştirmeyin.
+- Repository `Settings -> Pages -> Source` değeri `GitHub Actions` olmalı.
+- Actions sekmesinde deploy workflow'u başarılı bitmeli.
+- Dosyalar repo kökünde olmalı, bir alt klasörde olmamalı.
+- Özel domain kullanmıyorsanız `public/CNAME` olmamalı.
+- Repository adı değiştiyse yeni push ile workflow yeniden çalışmalı.
 
-Bu projede gerçek AdSense kodu bilinçli olarak eklenmemiştir.
+## AdSense
+
+Gerçek AdSense kodu eklenmemiştir. `public/ads.txt` dosyası onay sonrası gerçek publisher bilgisiyle güncellenmelidir.

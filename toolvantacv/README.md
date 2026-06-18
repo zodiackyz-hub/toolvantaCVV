@@ -90,8 +90,15 @@ Yapılan ayarlar:
 - `trailingSlash: true`
 - `images.unoptimized: true`
 - `public/.nojekyll`
-- `public/CNAME` içinde `toolvantacv.space`
 - GitHub Actions workflow dosyası
+- Repository URL yayını için otomatik `GITHUB_PAGES_BASE_PATH`
+- `NEXT_PUBLIC_SITE_URL` ile sitemap, canonical ve Open Graph URL kontrolü
+
+Varsayılan hedef, özel domain olmadan GitHub repository URL altında çalışmaktır:
+
+```txt
+https://kullanici-adi.github.io/repository-name/
+```
 
 Eğer GitHub reposunun kökü doğrudan `toolvantacv` ise şu workflow kullanılır:
 
@@ -116,22 +123,33 @@ GitHub ayarları:
 
 1. Repository Settings bölümüne girin.
 2. Pages bölümünde Source olarak `GitHub Actions` seçin.
-3. Domain olarak `toolvantacv.space` ekleyin.
-4. DNS tarafında GitHub Pages kayıtlarını oluşturun.
-5. Değişiklikleri `main` veya `master` branch'e push edin.
+3. Değişiklikleri `main` veya `master` branch'e push edin.
+4. Actions tamamlandıktan sonra Pages URL'sini açın.
 
 Build çıktısı GitHub Actions tarafından `out/` klasöründen Pages'e yüklenir.
 
-Özel domain kullanmadan `username.github.io/repository-name` altında yayınlayacaksanız `next.config.mjs` içindeki `GITHUB_PAGES_BASE_PATH` desteğini kullanabilirsiniz. Workflow build adımına örnek:
+Workflow normal repository Pages yayını için şu değerleri otomatik oluşturur:
 
 ```yaml
-env:
-  GITHUB_PAGES_BASE_PATH: /repository-name
+GITHUB_PAGES_BASE_PATH: /repository-name
+NEXT_PUBLIC_SITE_URL: https://username.github.io/repository-name
 ```
+
+Bu ayar özellikle 404 hatasını önler; Next.js linkleri ve static asset yolları repository alt yolu ile üretilir.
+
+Özel domain kullanmak isterseniz:
+
+1. `public/CNAME.example` dosyasını `public/CNAME` olarak kopyalayın.
+2. İçeriği `toolvantacv.space` olarak bırakın veya kendi domaininizle değiştirin.
+3. GitHub repository Settings -> Secrets and variables -> Actions -> Variables bölümüne `GITHUB_PAGES_CUSTOM_DOMAIN` ekleyin.
+4. Değer olarak `toolvantacv.space` yazın.
+5. Pages bölümünde custom domaini tanımlayın ve DNS kayıtlarını GitHub Pages'e yönlendirin.
+
+Özel domain aktif olduğunda workflow `basePath` kullanmaz ve site kök domainde çalışır.
 
 ## Google Analytics
 
-Google Analytics 4 ölçüm kimliğini Vercel ortam değişkenlerine ekleyin:
+Google Analytics 4 ölçüm kimliğini Vercel veya GitHub Actions ortam değişkenlerine ekleyin:
 
 ```txt
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
